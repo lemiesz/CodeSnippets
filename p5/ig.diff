@@ -1,0 +1,65 @@
+diff --git a/src/blast/js/modules/mvc/viewComponentsImpl/ContainerViewComponentImpl.js b/src/blast/js/modules/mvc/viewComponentsImpl/ContainerViewComponentImpl.js
+index 84391995..afe7b1ae 100644
+--- a/src/blast/js/modules/mvc/viewComponentsImpl/ContainerViewComponentImpl.js
++++ b/src/blast/js/modules/mvc/viewComponentsImpl/ContainerViewComponentImpl.js
+@@ -161,7 +161,6 @@ atv.muve.loadPackage("/js/modules/mvc/viewComponents/MediaPlayerViewComponent.js
+                 );
+                 this._object.addChild(this._bottomKeyPressOnMouseHoverZone);
+             }
+-
+             atv.muve.mvc.viewComponentsImpl.PlatformBaseViewPropertyProvider.appendMouseListeners(this);
+         },
+ 
+@@ -291,6 +290,43 @@ atv.muve.loadPackage("/js/modules/mvc/viewComponents/MediaPlayerViewComponent.js
+             }
+         },
+ 
++        /**
++         * Scroll container by a specified pixel value
++         * @Override
++         * @param scrollableContainer
++         * @param pixelsToScroll
++         * @param shouldScrollUp - true  (to scroll up)
++         *                       - false (to scroll down)
++         */
++        scrollContainerVerticallyByPixel: function (scrollableContainer, pixelsToScroll, shouldScrollUp) {
++            // Ignore sign of pixels to scroll, direction is controlled by type of action SCROLL_UP || SCROLL_DOWN
++            pixelsToScroll = Math.abs(pixelsToScroll);
++            var children = this.getChildren();
++            if (!this.getChildren() || this.getChildren().length <= 0) {
++                return;
++            }
++
++            var totalChildrenHeight = 0;
++            children.forEach(function(child) {
++                totalChildrenHeight += child.getHeight();
++            });
++
++            if (this.getY() >= 0 && shouldScrollUp) {
++                return;
++            } else if(this.getY() + totalChildrenHeight <= this.getHeight() && !shouldScrollUp) {
++                return
++            }
++
++            pixelsToScroll = shouldScrollUp ? pixelsToScroll : -1 * pixelsToScroll;
++            // this.moveToPosWithAnimation({newY: this.getY() + pixelsToScroll });
++            this.setYSuper(this.getY() + pixelsToScroll);
++
++            var scrollAmount = Math.abs(this.getY());
++            if(this.scrollbar) {
++                this.scrollbar.scrollVerticallyByPercentage(scrollAmount / totalChildrenHeight);
++            }
++        },
++
+         /**
+          * Adds viewComponent to the container, and sets position attribute of viewComponent.
+          * Viewcomponent is added based on container alignment either Horizontal or vertical
+@@ -308,7 +344,7 @@ atv.muve.loadPackage("/js/modules/mvc/viewComponents/MediaPlayerViewComponent.js
+ 
+                 if (typeof viewComponent.getNativeObject === 'function') {
+                     childNativeObject = viewComponent.getNativeObject();
+-                }
++                }c
+                 if (typeof viewComponent.getMaskNode === 'function') {
+                     maskNode = viewComponent.getMaskNode();
+                 }

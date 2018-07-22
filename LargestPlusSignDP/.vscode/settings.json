@@ -1,0 +1,22 @@
+{
+    "files.associations": {
+        "__hash_table": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "__bit_reference": "cpp",
+        "__string": "cpp",
+        "algorithm": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "unordered_set": "cpp",
+        "bitset": "cpp",
+        "chrono": "cpp",
+        "iosfwd": "cpp",
+        "iterator": "cpp",
+        "__config": "cpp",
+        "iostream": "cpp",
+        "__split_buffer": "cpp",
+        "initializer_list": "cpp",
+        "limits": "cpp"
+    }
+}
